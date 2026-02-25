@@ -784,7 +784,7 @@ if ( ! function_exists( 'bws_admin_enqueue_scripts' ) ) {
 
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-		wp_enqueue_style( 'bws-admin-css', bws_menu_url( 'css/general_style.css' ), array(), '2.4.2' );
+		wp_enqueue_style( 'bws-admin-css', bws_menu_url( 'css/general_style.css' ), array(), '2.4.4' );
 		wp_enqueue_script( 'bws-admin-scripts', bws_menu_url( 'js/general_script.js' ), array( 'jquery', 'jquery-ui-tooltip' ) );
 
 		$plugin_dir  = explode( '/', plugin_basename( __FILE__ ) )[0];
@@ -805,7 +805,7 @@ if ( ! function_exists( 'bws_admin_enqueue_scripts' ) ) {
 		if ( in_array( $page, array( 'bws_panel', 'bws_themes', 'bws_system_status', $plugin_file ) ) || $include_jquery_ui || strpos( $page, '-bws-panel' ) ) {
 			$jquery_ui_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.12.1';
 			WP_Filesystem();
-			if ( ! empty( $wp_filesystem->link ) && ! $wp_filesystem->exists( dirname( __FILE__ ) . '/css/jquery-ui-styles/' . $jquery_ui_version . '/' ) ) {
+			if ( ! $wp_filesystem->exists( dirname( __FILE__ ) . '/css/jquery-ui-styles/' . $jquery_ui_version . '/' ) ) {
 				$jquery_ui_version = '1.12.1';
 			}
 			wp_enqueue_style( 'jquery-ui-style', bws_menu_url( 'css/jquery-ui-styles/' . $jquery_ui_version . '/jquery-ui.css', array(), $jquery_ui_version ) );

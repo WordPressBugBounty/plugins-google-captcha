@@ -135,6 +135,11 @@ if ( ! class_exists( 'Gglcptch_Settings_Tabs' ) ) {
 					$this->options['hours'][ $key ] = array_map( 'intval', $value );
 				}
 
+				/* Force Strong Passwords */
+				$this->options['fsp_enable'] = isset( $_POST['gglcptch_force_strong_passwords'] ) ? 1 : 0;
+				$this->options['fsp_length'] = isset( $_POST['gglcptch_fsp_length'] ) && 12 <= intval( $_POST['gglcptch_fsp_length'] ) ? intval( $_POST['gglcptch_fsp_length'] ) : 12;
+				$this->options['fsp_error_message'] = isset( $_POST['gglcptch_fsp_error_message'] ) ? sanitize_text_field( wp_unslash( $_POST['gglcptch_fsp_error_message'] ) ) : __( 'Password must be at least {min_length} characters long and include uppercase and lowercase letters and numbers.', 'google-captcha' );
+				
 				foreach ( $this->forms as $form_slug => $form_data ) {
 					$this->options[ $form_slug ] = isset( $_POST[ 'gglcptch_' . $form_slug ] ) ? 1 : 0;
 				}
@@ -510,6 +515,33 @@ if ( ! class_exists( 'Gglcptch_Settings_Tabs' ) ) {
 						<input<?php echo wp_kses_post( $this->change_permission_attr ); ?> id="gglcptch_disable_submit" type="checkbox" <?php checked( ! empty( $this->options['disable_submit'] ) ); ?> name="gglcptch_disable_submit" value="1" />
 						<span class="bws_info">
 							<?php esc_html_e( 'Enable to keep submit button disabled until reCaptcha is loaded (do not use this option if you see "Failed to load Google reCaptcha" message).', 'google-captcha' ); ?>
+						</span>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><?php esc_html_e( 'Force Strong Passwords (FSP)', 'google-captcha' ); ?></th>
+					<td>
+						<input<?php echo wp_kses_post( $this->change_permission_attr ); ?> id="gglcptch_force_strong_passwords" type="checkbox" <?php checked( isset( $this->options['fsp_enable'] ) && 1 === $this->options['fsp_enable'] ); ?> name="gglcptch_force_strong_passwords" value="1" />
+						<span class="bws_info">
+							<?php esc_html_e( 'Requires passwords to include uppercase and lowercase letters and numbers, with a minimum length. Applies only to the default WordPress registration form.', 'google-captcha' ); ?>
+						</span>
+					</td>
+				</tr>
+				<tr class="gglcptch_fsp" valign="top">
+					<th scope="row"><?php esc_html_e( 'Minimum Password Length', 'google-captcha' ); ?></th>
+					<td>
+						<input<?php echo wp_kses_post( $this->change_permission_attr ); ?> class="small-text" type="number" name="gglcptch_fsp_length" value="<?php echo intval( $this->options['fsp_length'] ); ?>" min="12" max="25" step="1" />
+						<span class="bws_info">
+							<?php esc_html_e( 'Set the minimum number of characters required for a password.', 'google-captcha' ); ?>
+						</span>
+					</td>
+				</tr>
+				<tr class="gglcptch_fsp" valign="top">
+					<th scope="row"><?php esc_html_e( 'Password Error Message', 'google-captcha' ); ?></th>
+					<td>
+						<textarea name="gglcptch_fsp_error_message"><?php echo esc_html( $this->options['fsp_error_message'] ); ?></textarea><br />
+						<span class="bws_info">
+							<?php esc_html_e( 'Use the following shortcode in your message', 'google-captcha' ); ?>: <code>{min_length}</code>
 						</span>
 					</td>
 				</tr>

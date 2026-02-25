@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: anti-spam security, antispam, recaptcha, captcha, captha, Invisible reCaptcha, Invisible captcha, Invisibl reCaptcha, comment, cpatcha, google catcha, Invisible re captcha, recaptcha version3
-Requires at least: 5.6
-Tested up to: 6.9
-Stable tag: 1.85
+Requires at least: 6.5
+Tested up to: 6.9.1
+Stable tag: 1.86
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -52,6 +52,7 @@ http://www.youtube.com/watch?v=L2BziEOL3Fg
 * Multilingual and RTL ready
 * Edit error message
 * Hide Login page
+* Force Strong Passwords
 
 > **Pro Features**
 >
@@ -99,6 +100,10 @@ http://www.youtube.com/watch?v=L2BziEOL3Fg
 > 	* Registration form
 > 	* Profile form
 > * Compatible with BWS Login Register Form:
+> 	* Login form
+> 	* Registration form
+> 	* Forgot Password form
+> * Compatible with Easy Digital Downloads Form:
 > 	* Login form
 > 	* Registration form
 > 	* Forgot Password form
@@ -297,6 +302,13 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 8. reCaptcha Allow List page.
 
 == Changelog ==
+
+= V1.86 - 24.02.2026 =
+* Pro : The new compatibility with Easy Digital Downloads has been added.
+* NEW : The Force Strong Passwords functionality has been added.
+* Update : BWS Panel section was updated.
+* Bugfix : Minor bugs fixed.
+* Update : All functionality was updated for WordPress 6.9.1.
 
 = V1.85 - 08.12.2025 =
 * Pro : The Administrator Login notification functionality has been added.
@@ -683,6 +695,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Ability to add Google Captcha (reCAPTCHA) into standard forms was added.
 
 == Upgrade Notice ==
+
+= V1.86 =
+* The compatibility with new WordPress version updated.
+* New features added.
+* Bug fixed.
 
 = V1.85 =
 * The compatibility with new WordPress version updated.

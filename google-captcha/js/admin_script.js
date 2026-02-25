@@ -87,6 +87,14 @@
 				$( '.gglcptch_login_slug' ).hide();
 			}
 		} );
+
+		$( '#gglcptch_force_strong_passwords' ).change( function() {
+			if ( $( this ).is( ':checked' ) ) {
+				$( '.gglcptch_fsp' ).show();
+			} else {
+				$( '.gglcptch_fsp' ).hide();
+			}
+		} ).trigger( 'change' );
 	} );
 
 	$( document ).on( 'click', '#gglcptch-test-keys a', function( e ) {

@@ -89,6 +89,9 @@ if ( ! function_exists( 'gglcptch_supported_plugins_banner' ) ) {
 			'learndash_login_form'        => array( 'form_name' => __( 'LearnDash login form', 'google-captcha' ) ),
 			'learndash_registration_form' => array( 'form_name' => __( 'LearnDash registration form', 'google-captcha' ) ),
 			'bboss_registration_form'     => array( 'form_name' => __( 'BuddyBoss registration form', 'google-captcha' ) ),
+			'edd_login_form'              => array( 'form_name' => __( 'Easy Digital Downloads login form', 'google-captcha' ) ),
+			'edd_register_form'           => array( 'form_name' => __( 'Easy Digital Downloads registration form', 'google-captcha' ) ),
+			'edd_lost_password_form'      => array( 'form_name' => __( 'Easy Digital Downloads lostpassword form', 'google-captcha' ) ),
 		);
 		$pro_sections = array(
 			'external'        => array(
@@ -173,6 +176,14 @@ if ( ! function_exists( 'gglcptch_supported_plugins_banner' ) ) {
 				'name'  => 'BuddyBoss',
 				'forms' => array(
 					'bboss_registration_form',
+				),
+			),
+			'edd_forms' => array(
+				'name'  => 'Easy Digital Downloads',
+				'forms' => array(
+					'edd_login_form',
+					'edd_register_form',
+					'edd_lost_password_form',
 				),
 			),
 		);

@@ -6,7 +6,7 @@ Description: Protect WordPress website forms from spam entries with Google Captc
 Author: BestWebSoft
 Text Domain: google-captcha
 Domain Path: /languages
-Version: 1.85
+Version: 1.86
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
  */
@@ -138,7 +138,7 @@ if ( ! function_exists( 'gglcptch_init' ) ) {
 			gglcptch_add_actions();
 		}
 
-		if ( isset( $gglcptch_options['hide_login'] ) && isset( $gglcptch_options['slug_login'] ) && ! empty( $gglcptch_options['slug_login'] ) ) {
+		if ( isset( $gglcptch_options['hide_login'] ) && 1 === $gglcptch_options['hide_login'] && isset( $gglcptch_options['slug_login'] ) && ! empty( $gglcptch_options['slug_login'] ) ) {
 			$request_url = sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) );
 			add_filter( 'site_url', 'gglcptch_check_login_url', 10, 4 );
 			add_action( 'login_init', 'gglcptch_login_head', 10 );
@@ -303,7 +303,7 @@ if ( ! function_exists( 'gglcptch_add_admin_script_styles' ) ) {
 
 		if ( isset( $_REQUEST['page'] ) && ( 'google-captcha.php' === sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) || 'google-captcha-allowlist.php' === sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) ) ) {
 			wp_enqueue_style( 'gglcptch_stylesheet', plugins_url( 'css/style.css', __FILE__ ), array(), $gglcptch_plugin_info['Version'] );
-			wp_enqueue_script( 'gglcptch_admin_script', plugins_url( 'js/admin_script.js', __FILE__ ), array( 'jquery', 'jquery-ui-accordion' ), $gglcptch_plugin_info['Version'], true );
+			wp_enqueue_script( 'gglcptch_admin_script', plugins_url( 'js/admin_script.js', __FILE__ ), array( 'jquery', 'jquery-ui-accordion' ), $gglcptch_plugin_info['Version'] . '.1', true );
 
 			bws_enqueue_settings_scripts();
 			bws_plugins_include_codemirror();
@@ -623,6 +623,9 @@ if ( ! function_exists( 'gglcptch_get_default_options' ) ) {
 			'hide_login'              => 0,
 			'slug_login'              => '',
 			'login_error_redirection' => '404',
+			'fsp_enable'              => 0,
+			'fsp_length'              => 12,
+			'fsp_error_message'       => __( 'Password must be at least {min_length} characters long and include uppercase and lowercase letters, numbers and symbols.', 'google-captcha' ),
 	);
 
 		if ( function_exists( 'get_editable_roles' ) ) {

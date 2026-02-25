@@ -263,6 +263,13 @@ if ( ! function_exists( 'gglcptch_add_actions' ) ) {
 			add_filter( 'lgnrgstrfrm_check_field', 'gglcptch_check_login_register_forms', 10 );
 		}
 
+		/* Add Force Strong Passwords to login/register forms */
+		add_action( 'validate_password_reset', 'gglcptch_validate_password_reset_form', 10, 2 );
+		/*add_action( 'bp_before_account_details_fields', 'gglcptch_display_bp_errors', 10, 0 );
+		add_action( 'bp_signup_pre_validate', 'gglcptch_validate_bp_signup_form', 10, 0 );
+		add_action( 'bp_template_content', 'gglcptch_display_bp_template_errors', 10, 0 );
+		add_action( 'bp_core_general_settings_after_save', 'gglcptch_bp_add_error', 10, 0 );*/
+
 		do_action( 'gglcptch_add_plus_actions', $is_user_logged_in );
 	}
 }
@@ -617,6 +624,43 @@ if ( ! function_exists( 'gglcptch_check_login_register_forms' ) ) {
 			return $error_message;
 		}
 		return '';
+	}
+}
+
+if ( ! function_exists( 'gglcptch_validate_password_reset_form' ) ) {
+	function gglcptch_validate_password_reset_form( $errors, $user ) {
+		if ( isset( $_POST['pass1'] ) && ! empty( $_POST['pass1'] ) ) {
+
+			global $gglcptch_options;
+
+			if ( empty( $gglcptch_options ) ) {
+				$gglcptch_options = get_option( 'gglcptch_options' );
+			}
+
+			$result = gglcptch_validate_password( $_POST['pass1'] );
+			if ( false === $result ) {
+				$errors->add( 'error', str_replace( '{min_length}', $gglcptch_options['fsp_length'], $gglcptch_options['fsp_error_message'] ), 'gglcptch-security' );
+			}
+		}
+
+		return $errors;
+	}
+}
+
+if ( ! function_exists( 'gglcptch_validate_password' ) ) {
+	function gglcptch_validate_password( $password ) {
+		global $gglcptch_options;
+
+		if ( empty( $gglcptch_options ) ) {
+			$gglcptch_options = get_option( 'gglcptch_options' );
+		}  
+	
+		$pattern = '/^[a-zA-Z\d\!\@\#\$\%\^\&\*\(\)\-\_\[\]\{\}\<\>\~\`\+\=\,\.\;\:\/\?\|\'\"\\\\]{' . $gglcptch_options['fsp_length'] . ',25}$/';
+	
+		if ( strlen( $password ) < $gglcptch_options['fsp_length'] || ! preg_match( $pattern, $password ) ) {
+			return false;
+		}
+		return true;
 	}
 }
 
