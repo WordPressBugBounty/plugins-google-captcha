@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: anti-spam security, antispam, recaptcha, captcha, captha, Invisible reCaptcha, Invisible captcha, Invisibl reCaptcha, comment, cpatcha, google catcha, Invisible re captcha, recaptcha version3
 Requires at least: 6.5
-Tested up to: 6.9.1
-Stable tag: 1.86
+Tested up to: 7.0
+Stable tag: 1.87
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -303,7 +303,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
-= V1.86 - 24.02.2026 =
+= V1.87 - 24.04.2026 =
+* NEW : Disable view source feature added.
+* Update : BWS Panel section was updated.
+* Update : All functionality was updated for WordPress 7.0.
+
+= V1.86 - 10.02.2026 =
 * Pro : The new compatibility with Easy Digital Downloads has been added.
 * NEW : The Force Strong Passwords functionality has been added.
 * Update : BWS Panel section was updated.

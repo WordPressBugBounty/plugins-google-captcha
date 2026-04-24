@@ -126,6 +126,7 @@ if ( ! class_exists( 'Gglcptch_Settings_Tabs' ) ) {
 				$this->options['disable_submit']        = isset( $_POST['gglcptch_disable_submit'] ) ? 1 : 0;
 				$this->options['hide_badge']            = isset( $_POST['gglcptch_hide_badge'] ) ? 1 : 0;
 				$this->options['disable_submit_button'] = isset( $_POST['gglcptch_disable_submit_button'] ) ? 1 : 0;
+				$this->options['disable_view_source']   = isset( $_POST['gglcptch_disable_view_source'] ) ? 1 : 0;
 				$this->options['use_globally']          = isset( $_POST['gglcptch_use_globally'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['gglcptch_use_globally'] ) ) ) : 0;
 
 				$this->options['weekdays'] = isset( $_POST['gglcptch_weekdays'] ) && is_array( $_POST['gglcptch_weekdays'] ) ? array_map( 'intval', $_POST['gglcptch_weekdays'] ) : array();
@@ -553,6 +554,17 @@ if ( ! class_exists( 'Gglcptch_Settings_Tabs' ) ) {
 						<input<?php echo wp_kses_post( $this->change_permission_attr ); ?> id="gglcptch_disable_submit_button" type="checkbox" <?php checked( ! empty( $this->options['disable_submit_button'] ) ); ?> name="gglcptch_disable_submit_button" value="1" />
 						<span class="bws_info">
 							<?php esc_html_e( 'Enable to keep submit button disabled until user passes the reCaptcha test (for Version 2).', 'google-captcha' ); ?>
+						</span>
+					</td>
+				</tr>
+				<tr class="gglcptch_submit_v2" valign="top">
+					<th scope="row">
+						<?php esc_html_e( 'Disabled "View Source"', 'google-captcha' ); ?>
+					</th>
+					<td>
+						<input<?php echo wp_kses_post( $this->change_permission_attr ); ?> id="gglcptch_disable_view_source" type="checkbox" <?php checked( ! empty( $this->options['disable_view_source'] ) ); ?> name="gglcptch_disable_view_source" value="1" />
+						<span class="bws_info">
+							<?php esc_html_e( 'Prevent users from viewing the page source in their browser using F12, Ctrl+U (View Source), Ctrl+Shift+I and right-clicking on the page to select "Inspect" or "View page source"', 'google-captcha' ); ?>
 						</span>
 					</td>
 				</tr>

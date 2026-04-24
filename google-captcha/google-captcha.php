@@ -6,7 +6,7 @@ Description: Protect WordPress website forms from spam entries with Google Captc
 Author: BestWebSoft
 Text Domain: google-captcha
 Domain Path: /languages
-Version: 1.86
+Version: 1.87
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
  */
@@ -318,6 +318,18 @@ if ( ! function_exists( 'gglcptch_add_login_styles' ) ) {
 		global $gglcptch_plugin_info, $gglcptch_options;
 
 		wp_enqueue_style( 'gglcptch_stylesheet', plugins_url( 'css/login-style.css', __FILE__ ), array(), $gglcptch_plugin_info['Version'] );
+
+		if ( isset( $gglcptch_options['disable_view_source'] ) && 1 === $gglcptch_options['disable_view_source'] ) {
+			wp_enqueue_script( 'gglcptch_source_script', plugins_url( 'js/source-script.js', __FILE__ ), array( 'jquery' ), $gglcptch_plugin_info['Version'], true );
+
+			wp_localize_script(
+				'gglcptch_source_script',
+				'gglcptchSource',
+				array(
+					'disable_view_source' => $gglcptch_options['disable_view_source'],
+				)
+			);
+		}
 	}
 }
 
@@ -343,6 +355,27 @@ if ( ! function_exists( 'gglcptch_admin_footer' ) ) {
 			wp_register_script( 'gglcptch_api', $api_url, $deps, $gglcptch_plugin_info['Version'], true );
 			gglcptch_add_scripts();
 		}
+	}
+}
+
+if ( ! function_exists( 'gglcptch_enqueue_scripts' ) ) {
+	/**
+	 * Add google captcha to footer
+	 */
+	function gglcptch_enqueue_scripts() {
+		global $gglcptch_plugin_info, $gglcptch_options;
+
+		if ( isset( $gglcptch_options['disable_view_source'] ) && 1 === $gglcptch_options['disable_view_source'] ) {
+			wp_enqueue_script( 'gglcptch_source_script', plugins_url( 'js/source-script.js', __FILE__ ), array( 'jquery' ), $gglcptch_plugin_info['Version'], true );
+
+			wp_localize_script(
+				'gglcptch_source_script',
+				'gglcptchSource',
+				array(
+					'disable_view_source' => $gglcptch_options['disable_view_source'],
+				)
+			);
+		}		
 	}
 }
 
@@ -626,6 +659,7 @@ if ( ! function_exists( 'gglcptch_get_default_options' ) ) {
 			'fsp_enable'              => 0,
 			'fsp_length'              => 12,
 			'fsp_error_message'       => __( 'Password must be at least {min_length} characters long and include uppercase and lowercase letters, numbers and symbols.', 'google-captcha' ),
+			'disable_view_source'     => 0,
 	);
 
 		if ( function_exists( 'get_editable_roles' ) ) {
@@ -1572,6 +1606,7 @@ add_action( 'admin_enqueue_scripts', 'gglcptch_add_admin_script_styles' );
 add_action( 'login_enqueue_scripts', 'gglcptch_add_login_styles' );
 add_filter( 'script_loader_tag', 'gglcptch_add_async_attribute', 10, 2 );
 add_action( 'admin_footer', 'gglcptch_admin_footer' );
+add_action( 'wp_enqueue_scripts', 'gglcptch_enqueue_scripts' );
 add_filter( 'pgntn_callback', 'gglcptch_pagination_callback' );
 
 add_filter( 'lmtttmpts_plugin_forms', 'gglcptch_add_lmtttmpts_forms', 10, 1 );
